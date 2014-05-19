@@ -47,8 +47,8 @@ def read_input(file):
 
 
 def main():
-        #f = open('private_batch_mapped')
-        #data = [line for line in read_input(f)]
+    #f = open('private_batch_mapped')
+    #data = [line for line in read_input(f)]
     data = read_input(sys.stdin)
     # group by batch head
     # e.g. head = "1|2" (country batch, country=2)
@@ -61,13 +61,22 @@ def main():
         bottom = regions[-1]
         area = sorted((e.split()
                       for head, e in group), key=itemgetter(*bottom))
+        # print "******************area******************"
+        # print 'sorted by', bottom
+        # for i in area:
+        #     print ' '.join(i)
+        # print "*************************************"
         # area = [e.split() for e in raw_area]  # get useful fields
         for R in regions:
+            area.sort(key=itemgetter(*R))
             for region, group in groupby(area, itemgetter(*R)):
                 if type(region) is str:
                     region = (region,)
                 uids = set(record[-1] for record in group)
-				#print uids
+                # print '*' * 15
+                # print region
+                # print uids
+                # print '*' * 15
                 reach = len(uids)
                 values = sorted(zip(R, region), key=itemgetter(0))
                 indexes = [index_dict[v[0]] for v in values]
