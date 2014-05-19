@@ -2,7 +2,6 @@
 
 from itertools import groupby
 from operator import itemgetter
-from collections import deque
 import sys
 
 uid = 6
@@ -53,35 +52,21 @@ def main():
     # group by batch head
     # e.g. head = "1|2" (country batch, country=2)
     # group = [("1|2", "..... uid"), ("1|2", ".... uid") ....]
-    for head, group in groupby(data, itemgetter(0)):
+    for head, outtergroup in groupby(data, itemgetter(0)):
         batch = int(head.split('|')[0])
         # regions = the batch scheme
         regions = C[batch]
         # area = [(country, state, ...., uid)...]
-        bottom = regions[-1]
-        area = sorted((e.split()
-                      for head, e in group), key=itemgetter(*bottom))
-        # print "******************area******************"
-        # print 'sorted by', bottom
-        # for i in area:
-        #     print ' '.join(i)
-        # print "*************************************"
-        # area = [e.split() for e in raw_area]  # get useful fields
+        area = [e.split() for head, e in outtergroup]
         for R in regions:
             area.sort(key=itemgetter(*R))
-            for region, group in groupby(area, itemgetter(*R)):
+            for region, innergroup in groupby(area, itemgetter(*R)):
                 if type(region) is str:
                     region = (region,)
-                uids = set(record[-1] for record in group)
-                # print '*' * 15
-                # print region
-                # print uids
-                # print '*' * 15
-                reach = len(uids)
+                reach = len(set(e[uid] for e in innergroup))
                 values = sorted(zip(R, region), key=itemgetter(0))
                 indexes = [index_dict[v[0]] for v in values]
                 attrs = [v[1] for v in values]
                 print "%s|%s\t%s" % (' '.join(indexes), ' '.join(attrs), reach)
-
 if __name__ == "__main__":
     main()

@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import sys
-from itertools import product
 
 uid = 1
 country, state, city = 2, 3, 4
