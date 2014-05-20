@@ -9,24 +9,24 @@ topic, category, product = 5, 6, 7
 p = 4
 
 C = [(
-    (country,),
-    (country, state),
-    (country, state, city),
-    (country, state, city, topic),
+    (country, state, city, topic, category, product),
     (country, state, city, topic, category),
-    (country, state, city, topic, category, product)
+    (country, state, city, topic),
+    (country, state, city),
+    (country, state),
+    (country,)
 ), (
-    (topic,),
-    (topic, country),
-    (topic, country, state),
-    (topic, category, country, state),
-    (topic, category, product, country, state)
+    (country, state, topic, category, product),
+    (country, state, topic, category),
+    (country, state, topic)
 ), (
-    (topic, category),
-    (topic, category, country),
-    (topic, category, product, country)
+    (country, topic, category, product),
+    (country, topic, category),
+    (country, topic)
 ), (
     (topic, category, product),
+    (topic, category),
+    (topic,)
 )]
 
 batch_number = len(C)
@@ -45,7 +45,7 @@ def main():
     data = read_input(sys.stdin)
     for e in data:
         for batch in range(batch_number):
-            head = "%s|%s" % (str(batch), ' '.join(e[i] for i in C[batch][0]))
+            head = "%s|%s" % (str(batch), ' '.join(e[i] for i in C[batch][-1]))
             part = bisect_left(boundaries, head) % p
             # batch_head | head_value <TAB> country, ..., product uid
             print "%d\t%s\t%s" % (part, head, ' '.join(e[i] for i in useful))

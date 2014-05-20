@@ -9,24 +9,24 @@ country, state, city = 0, 1, 2
 topic, category, product = 3, 4, 5
 
 C = [(
-    (country,),
-    (country, state),
-    (country, state, city),
-    (country, state, city, topic),
+    (country, state, city, topic, category, product),
     (country, state, city, topic, category),
-    (country, state, city, topic, category, product)
+    (country, state, city, topic),
+    (country, state, city),
+    (country, state),
+    (country,)
 ), (
-    (topic,),
-    (topic, country),
-    (topic, country, state),
-    (topic, category, country, state),
-    (topic, category, product, country, state)
+    (country, state, topic, category, product),
+    (country, state, topic, category),
+    (country, state, topic)
 ), (
-    (topic, category),
-    (topic, category, country),
-    (topic, category, product, country)
+    (country, topic, category, product),
+    (country, topic, category),
+    (country, topic)
 ), (
     (topic, category, product),
+    (topic, category),
+    (topic,)
 )]
 
 head_dict = {
@@ -56,10 +56,10 @@ def main():
         batch = int(head.split('|')[0])
         # regions = the batch scheme
         regions = C[batch]
+        bottom = regions[0]
         # area = [(country, state, ...., uid)...]
-        area = [e.split() for head, e in outtergroup]
+        area = sorted((e.split() for head, e in outtergroup), key=itemgetter(*bottom))
         for R in regions:
-            area.sort(key=itemgetter(*R))
             for region, innergroup in groupby(area, itemgetter(*R)):
                 if type(region) is str:
                     region = (region,)

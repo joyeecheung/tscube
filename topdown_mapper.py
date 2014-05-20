@@ -66,7 +66,7 @@ def read_input(file):
 
 
 def main():
-    pt_f = open('partition_lst')
+    pt_f = open('partition_lst', 'r')
     boundaries = [line for line in pt_f]
     data = read_input(sys.stdin)
     for e in data:
@@ -76,7 +76,6 @@ def main():
             part = bisect_left(boundaries, head) % p
             # batch_head | head_value <TAB> country, ..., product uid
             print "%d\t%s\t%s" % (part, head, ' '.join(e[i] for i in useful))
-
 
 if __name__ == "__main__":
     main()
