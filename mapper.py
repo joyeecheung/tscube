@@ -40,7 +40,7 @@ def read_input(file):
 
 
 def main():
-    pt_f = open('partition_lst')
+    pt_f = open('partition_lst', 'r')
     boundaries = [line for line in pt_f]
     data = read_input(sys.stdin)
     for e in data:
