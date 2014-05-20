@@ -42,7 +42,7 @@ index_dict = ("2", "3", "4", "5", "6", "7", "1")
 
 def read_input(file):
     for line in file:
-        yield line.rstrip().split('\t')
+        yield line.rstrip().split('\t')[1:]
 
 
 def main():
@@ -68,5 +68,7 @@ def main():
                 indexes = [index_dict[v[0]] for v in values]
                 attrs = [v[1] for v in values]
                 print "%s|%s\t%s" % (' '.join(indexes), ' '.join(attrs), reach)
+
+
 if __name__ == "__main__":
     main()
