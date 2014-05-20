@@ -11,11 +11,9 @@ def read_input(file):
 
 def main():
     data = sorted(read_input(sys.stdin))
-    count = 0
-    for e in data:
-        if count == p - 1:
-            print e[0]
-        count = (count + 1) % p
+    sample_size = len(data)
+    for i in range(0, sample_size, sample_size/p):
+        print data[i][0]
 
 if __name__ == "__main__":
     main()
