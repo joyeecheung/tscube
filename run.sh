@@ -1,4 +1,4 @@
-#hadoop fs -rmr sampleout batchout
+hadoop fs -rmr sampleout batchout
 #hadoop fs -rm partition_lst
 
 #hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar \
@@ -12,7 +12,8 @@
 
 hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar \
 -D stream.num.map.output.key.fields=2 \
--D num.key.fields.for.partition=2 \
+-D num.key.fields.for.partition=1 \
+-partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner \
 -file mapper.py    -mapper mapper.py \
 -file reducer.py   -reducer reducer.py \
 -cacheFile 'partition_lst#partition_lst' \
