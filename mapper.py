@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 import sys
+from bisect import bisect_left
 
 uid = 1
 country, state, city = 2, 3, 4
 topic, category, product = 5, 6, 7
+
+p = 4
 
 C = [(
     (country,),
@@ -37,12 +40,16 @@ def read_input(file):
 
 
 def main():
+    pt_f = open('partition_lst')
+    boundaries = [line for line in pt_f]
     data = read_input(sys.stdin)
     for e in data:
         for batch in range(batch_number):
+            head = "%s|%s" % (str(batch), ' '.join(e[i] for i in C[batch][0]))
+            part = bisect_left(boundaries, head) % p
             # batch_head | head_value <TAB> country, ..., product uid
-            print "%s|%s\t%s" % (str(batch),
-                                 ' '.join(e[i] for i in C[batch][0]),
-                                 ' '.join(e[i] for i in useful))
+            print "%d\t%s\t%s" % (part, head, ' '.join(e[i] for i in useful))
+
+
 if __name__ == "__main__":
     main()
