@@ -31,8 +31,6 @@ C = [(
 
 batch_number = len(C)
 
-useful = (country, state, city, topic, category, product, uid)
-
 
 def read_input(file):
     for line in file:
@@ -46,10 +44,9 @@ def main():
     for e in data:
         for batch in range(batch_number):
             head = "%s|%s" % (str(batch), ' '.join(e[i] for i in C[batch][-1]))
-            part = bisect_left(boundaries, head) % p
-            # batch_head | head_value <TAB> country, ..., product uid
-            print "%d\t%s\t%s" % (part, head, ' '.join(e[i] for i in useful))
-
+            pid = bisect_left(boundaries, head) % p
+            fields = ' '.join(e[i] for i in C[batch][0])
+            print "%d\t%s\t%s\t%s" % (pid, e[uid], head, fields)
 
 if __name__ == "__main__":
     main()
