@@ -28,6 +28,8 @@ C = [(
     (topic,)
 )]
 
+DEBUG = False
+
 
 def read_input(file):
     for line in file:
@@ -40,31 +42,68 @@ def main():
 
     # for each batch
     for head, group in groupby(data, itemgetter(1)):
+        if DEBUG:
+            print "processing batch", head
         batch = int(head.split('|')[0])
         b_size = len(C[batch][0])
+        b_min_size = len(C[batch][-1])
         cur_value = []
         cur_set = []
         for triple in group:
             fields = triple[-1].split(' ')
+            if DEBUG:
+                print "processing %s" % (' '.join(fields))
             uid = triple[0]
             if not cur_value:
+                if DEBUG:
+                    print "*" * 40
+                    print "init cur_value"
                 cur_value = fields[:]
-                cur_set = [set((fields[i], )) for i in range(b_size)]
-            for i in range(b_size - 1, -1, -1):
+                cur_set = [set((uid, )) for i in range(b_size)]
+
+                if DEBUG:
+                    print cur_value
+                    print cur_set
+                    print "*" * 40
+            for i in range(b_size - 1, b_min_size - 2, -1):
                 if fields[i] != cur_value[i]:
-                    val = ' '.join(fields[:i+1])
-                    attr = ' '.join(j for j in C[batch][0][:i+1])
+                    if DEBUG:
+                        print "field %d changed from %s to %s" % (i, cur_value[i], fields[i])
+                    val = ' '.join(cur_value[:i + 1])
+                    attr = ' '.join(j for j in C[batch][0][:i + 1])
                     print "%s|%s\t%s" % (attr, val, len(cur_set[i]))
                     cur_value[i] = fields[i]
+                    if DEBUG:
+                        print "old cur_set[%d]" % (i)
+                        print cur_set[i]
                     cur_set[i].clear()
                     cur_set[i].add(uid)
+
+                    if DEBUG:
+                        print "new cur_set[%d]" % (i)
+                        print cur_set[i]
                 else:
                     cur_set[i].add(uid)
-        val = ' '.join(head.split('|')[1].split())
-        attr = ' '.join(j for j in C[batch][-1])
-        print "%s|%s\t%s" % (attr, val, len(cur_set[0]))
-        cur_value = []
-        cur_set = []
+                    if DEBUG:
+                        print "fields[%d] no change" % (i)
+                        print "cur_value", cur_value
+                        print "cur_set[%d]" % (i)
+                        print cur_set[i]
+
+        if DEBUG:
+            print "batch ends"
+            for i in range(b_size - 1, b_min_size - 2, -1):
+                print "cur_set[%d]" % (i)
+                print cur_set[i]
+
+        for i in range(b_size - 1, b_min_size - 2, -1):
+            val = ' '.join(cur_value[:i + 1])
+            attr = ' '.join(j for j in C[batch][0][:i + 1])
+            print "%s|%s\t%s" % (attr, val, len(cur_set[i]))
+
+        # val = ' '.join(head.split('|')[1].split())
+        # attr = ' '.join(j for j in C[batch][-1])
+        # print "%s|%s\t%s" % (attr, val, len(cur_set[0]))
 
 if __name__ == "__main__":
     main()
