@@ -78,8 +78,8 @@ def main():
                         if DEBUG:
                             print "old cur_set[%d]" % (j)
                             print cur_set[j]
-                        cur_set[i].clear()
-                        cur_set[i].add(uid)
+                        cur_set[j].clear()
+                        cur_set[j].add(uid)
 
                         if DEBUG:
                             print "new cur_set[%d]" % (j)
