@@ -65,23 +65,28 @@ def main():
                     print cur_value
                     print cur_set
                     print "*" * 40
-            for i in range(b_size - 1, b_min_size - 2, -1):
+            # for i in range(b_size - 1, b_min_size - 2, -1):
+            for i in range(b_min_size - 1, b_size, 1):
                 if fields[i] != cur_value[i]:
                     if DEBUG:
-                        print "field %d changed from %s to %s" % (i, cur_value[i], fields[i])
-                    val = ' '.join(cur_value[:i + 1])
-                    attr = ' '.join(j for j in C[batch][0][:i + 1])
-                    print "%s|%s\t%s" % (attr, val, len(cur_set[i]))
-                    cur_value[i] = fields[i]
-                    if DEBUG:
-                        print "old cur_set[%d]" % (i)
-                        print cur_set[i]
-                    cur_set[i].clear()
-                    cur_set[i].add(uid)
+                        print "field %d changed from %s to %s" % (
+                            i, cur_value[i], fields[i])
+                    for j in range(i, b_size, 1):
+                        val = ' '.join(cur_value[:j + 1])
+                        attr = ' '.join(j for j in C[batch][0][:j + 1])
+                        print "%s|%s\t%s" % (attr, val, len(cur_set[j]))
+                        if DEBUG:
+                            print "old cur_set[%d]" % (j)
+                            print cur_set[j]
+                        cur_set[i].clear()
+                        cur_set[i].add(uid)
 
-                    if DEBUG:
-                        print "new cur_set[%d]" % (i)
-                        print cur_set[i]
+                        if DEBUG:
+                            print "new cur_set[%d]" % (j)
+                            print cur_set[j]
+                    cur_value[i:] = fields[i:]
+                    break
+
                 else:
                     cur_set[i].add(uid)
                     if DEBUG:
