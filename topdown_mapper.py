@@ -39,12 +39,15 @@ def read_input(file):
 
 def main():
     pt_f = open('partition_lst', 'r')
-    boundaries = [line for line in pt_f]
+    boundaries = [line.rstrip() for line in pt_f]
     data = read_input(sys.stdin)
     for e in data:
         for batch in range(batch_number):
             head = "%s|%s" % (str(batch), ' '.join(e[i] for i in C[batch][-1]))
-            pid = bisect_left(boundaries, head) % p
+            part = "%s|%s\t%s" % (str(batch),
+                                  ' '.join(e[i] for i in C[batch][-1]),
+                                  e[uid])
+            pid = bisect_left(boundaries, part) % p
             fields = ' '.join(e[i] for i in C[batch][0])
             print "%d\t%s\t%s\t%s" % (pid, e[uid], head, fields)
 
