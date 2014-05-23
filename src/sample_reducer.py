@@ -3,7 +3,6 @@ import sys
 
 p = 4
 
-
 def read_input(file):
     for line in file:
         yield line.rstrip()
@@ -12,7 +11,7 @@ def read_input(file):
 def main():
     data = sorted(read_input(sys.stdin))
     sample_size = len(data)
-    for i in range(0, sample_size, sample_size/p):
+    for i in range(sample_size/p, sample_size, sample_size/p):
         print data[i]
 
 if __name__ == "__main__":
