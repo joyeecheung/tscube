@@ -5,7 +5,7 @@ from math import log
 from random import random
 
 n = 10000
-p = 1
+p = 3
 m = float(n) / p
 rho = 1 / m * log(n * p)
 
