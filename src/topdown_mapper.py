@@ -6,8 +6,6 @@ uid = 1
 country, state, city = 2, 3, 4
 topic, category, product = 5, 6, 7
 
-p = 4
-
 C = [(
     (country, state, city, topic, category, product),
     (country, state, city, topic, category),
@@ -47,7 +45,7 @@ def main():
             part = "%s|%s\t%s" % (str(batch),
                                   ' '.join(e[i] for i in C[batch][-1]),
                                   e[uid])
-            pid = bisect_left(boundaries, part) % p
+            pid = bisect_left(boundaries, part)
             fields = ' '.join(e[i] for i in C[batch][0])
             print "%d\t%s\t%s\t%s" % (pid, e[uid], head, fields)
 

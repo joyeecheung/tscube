@@ -2,4 +2,6 @@
 *
 !*.py
 !*.sh
+!src
+!README
 !.gitignore

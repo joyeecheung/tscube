@@ -3,8 +3,8 @@
 
 hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar \
 -D mapred.reduce.tasks=1 \
--file sample_mapper.py    -mapper sample_mapper.py \
--file sample_reducer.py   -reducer sample_reducer.py \
+-file src/sample_mapper.py    -mapper src/sample_mapper.py \
+-file src/sample_reducer.py   -reducer src/sample_reducer.py \
 -input Hierarchy_d2D_10000.txt -output sampleout
 
 hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar \
@@ -15,12 +15,12 @@ hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar \
 -D mapred.reduce.tasks=4 \
 -D mapred.map.tasks=4 \
 -partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner \
--file topdown_mapper.py    -mapper topdown_mapper.py \
--file topdown_reducer.py   -reducer topdown_reducer.py \
+-file src/topdown_mapper.py    -mapper src/topdown_mapper.py \
+-file src/topdown_reducer.py   -reducer src/topdown_reducer.py \
 -cacheFile 'sampleout/part-00000#partition_lst' \
 -input Hierarchy_d2D_10000.txt -output batchout
 
 hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar \
--file post_mapper.py -mapper post_mapper.py \
--file post_reducer.py   -reducer post_reducer.py \
+-file src/post_mapper.py -mapper src/post_mapper.py \
+-file src/post_reducer.py   -reducer src/post_reducer.py \
 -input batchout/part-* -output final
