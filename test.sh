@@ -3,7 +3,7 @@ export LC_ALL=C
 cat Hierarchy_d2D_10000.txt | python sample_mapper.py | python sample_reducer.py > partition_lst
 
 ################## topdown #############################
-cat Hierarchy_d2D_10000.txt | ./topdown_mapper.py | sort -t $'\t' -k3,3 -k4,4 > td_mapped
+cat Hierarchy_d2D_10000.txt | ./topdown_mapper.py | sort -t $'\t' -k3,4 > td_mapped
 cat td_mapped | ./topdown_reducer.py | sort -t $'\t' -k1,1 > td_reduced
 
 ################### water batch ########################
