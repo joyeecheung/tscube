@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Estimate
+# Estimate, the number of records and partitions need to be configured.
 hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar \
 -D mapred.reduce.tasks=1 \
 -D mapred.job.name='TSCube Estimate' \
