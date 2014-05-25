@@ -9,11 +9,10 @@ from math import log
 from random import random
 import argparse
 
+# get number of records and partitions
 parser = argparse.ArgumentParser()
-
 parser.add_argument("-n", "--number", type=int, default=10000)
 parser.add_argument("-p", "--partition", type=int, default=3)
-
 args = parser.parse_args()
 n = args.number
 p = args.partition

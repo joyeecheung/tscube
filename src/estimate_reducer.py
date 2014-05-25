@@ -8,10 +8,9 @@
 import sys
 import argparse
 
+# get number of partitions
 parser = argparse.ArgumentParser()
-
 parser.add_argument("-p", "--partition", type=int, default=3)
-
 args = parser.parse_args()
 p = args.partition
 
