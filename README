@@ -24,6 +24,8 @@ Change the n and p to whatever is appropriate.
 
 Change the p to whatever is appropriate.
 
+4. We assume that the path to your Hadoop streaming jar is `$HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar`. If the assumption fails, please replace the path with the appropriate one in the run.sh.
+
 
 ## How to run the project
 Use
@@ -31,9 +33,6 @@ Use
 	$ ./run.sh /path/to/input /path/to/output
 
 The paths should be on HDFS.
-
-
-4. We assume that the path to your Hadoop streaming jar is `$HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar`. If the assumption fails, please replace the path with the appropriate one in the run.sh.
 
 
 ## About
