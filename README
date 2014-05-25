@@ -1,0 +1,42 @@
+## Configuration
+Before you run the project, there are a few configuration that needs to be set up.
+
+1. Open the run.sh, edit the number of reducer in the second job. Change the 3 in
+
+		-D mapred.reduce.tasks=3 \
+
+to whatever is appropriate.
+
+2. Open src/estimate_mapper.py, configure the number of records and partitions.
+
+		# arguments that need to be manually configured
+		n = 10000  # number of records
+		p = 3  # number of partitions
+		# configuration ends
+
+Change the n and p to whatever is appropriate.
+
+3. Open src/estimate_reducer.py, configure the number of partitions.
+
+		# arguments that need to be manually configured
+		p = 3  # number of partitions
+		# configuration ends
+
+Change the p to whatever is appropriate.
+
+
+## How to run the project
+Use
+
+	$ ./run.sh /path/to/input /path/to/output
+
+The paths should be on HDFS.
+
+
+4. We assume that the path to your Hadoop streaming jar is `$HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar`. If the assumption fails, please replace the path with the appropriate one in the run.sh.
+
+
+## About
+Author of this README: Joyee Cheung (joyeec9h3@gmail.com)
+Github repo: https://github.com/joyeec9h3/tscube
+   (currently private, will be opened after deadline.)

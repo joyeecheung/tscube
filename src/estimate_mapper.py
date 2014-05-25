@@ -1,18 +1,28 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+    Sample from the data set.
+"""
 
 import sys
 from math import log
 from random import random
 
-n = 10000
-p = 3
+# arguments that need to be manually configured
+n = 10000  # number of records
+p = 3  # number of partitions
+# configuration ends
+
+# calculate sampling probability
 m = float(n) / p
 rho = 1 / m * log(n * p)
 
+# readable indexes
 uid = 1
 country, state, city = 2, 3, 4
 topic, category, product = 5, 6, 7
 
+# shortest regions of each batch
 head = [(country,), (country, state, topic),
         (country, topic), (topic,)]
 
@@ -20,6 +30,7 @@ batch_number = len(head)
 
 
 def read_input(file):
+    """Read input and split."""
     for line in file:
         yield line.rstrip().split()
 
@@ -27,11 +38,13 @@ def read_input(file):
 def main():
     data = read_input(sys.stdin)
     for e in data:
-        if (random() < rho):
+        if (random() < rho):  # sampling
             for batch in range(batch_number):
-                # batch_head | head_value <TAB> country, ..., product uid
+                # output: batch id|values of shortest region <TAB> uid
                 print "%s|%s\t%s" % (str(batch),
                                      ' '.join(e[i] for i in head[batch]),
                                      e[uid])
+
+
 if __name__ == "__main__":
     main()
