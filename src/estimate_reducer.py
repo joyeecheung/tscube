@@ -6,10 +6,14 @@
 """
 
 import sys
+import argparse
 
-# arguments that need to be manually configured
-p = 3  # number of partitions
-# configuration ends
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-p", "--partition", type=int, default=3)
+
+args = parser.parse_args()
+p = args.partition
 
 
 def read_input(file):

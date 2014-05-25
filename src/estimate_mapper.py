@@ -7,11 +7,16 @@
 import sys
 from math import log
 from random import random
+import argparse
 
-# arguments that need to be manually configured
-n = 10000  # number of records
-p = 3  # number of partitions
-# configuration ends
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-n", "--number", type=int, default=10000)
+parser.add_argument("-p", "--partition", type=int, default=3)
+
+args = parser.parse_args()
+n = args.number
+p = args.partition
 
 # calculate sampling probability
 m = float(n) / p

@@ -4,8 +4,8 @@
 hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar \
 -D mapred.reduce.tasks=1 \
 -D mapred.job.name='TSCube Estimate' \
--file src/estimate_mapper.py    -mapper src/estimate_mapper.py \
--file src/estimate_reducer.py   -reducer src/estimate_reducer.py \
+-file src/estimate_mapper.py    -mapper 'python estimate_mapper.py -n 10000 -p 3' \
+-file src/estimate_reducer.py   -reducer 'python estimate_reducer.py -p 3' \
 -input $1 -output estimate_out
 
 
@@ -18,8 +18,8 @@ hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar \
 -D mapred.reduce.tasks=3 \
 -D mapred.job.name='TSCube Materialize' \
 -partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner \
--file src/materialize_mapper.py    -mapper src/materialize_mapper.py \
--file src/materialize_reducer.py   -reducer src/materialize_reducer.py \
+-file src/materialize_mapper.py    -mapper 'python materialize_mapper.py' \
+-file src/materialize_reducer.py   -reducer 'python materialize_reducer.py' \
 -cacheFile 'estimate_out/part-00000#partition_lst' \
 -input $1 -output materialize_out
 
@@ -27,6 +27,6 @@ hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar \
 # Postprocess
 hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar \
 -D mapred.job.name='TSCube Post Processing' \
--file src/post_mapper.py -mapper src/post_mapper.py \
--file src/post_reducer.py   -reducer src/post_reducer.py \
+-file src/post_mapper.py -mapper 'python post_mapper.py' \
+-file src/post_reducer.py   -reducer 'python post_reducer.py' \
 -input materialize_out/part-* -output $2
