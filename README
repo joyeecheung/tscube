@@ -20,6 +20,7 @@ to whatever is appropriate.
 
 
 ## Other assumptions
+We assume that the path to your Hadoop streaming jar is `$HADOOP_HOME/contrib/streaming/hadoop-streaming-1.0.4.jar`. If the assumption fails, please replace the path with the appropriate one in the run.sh.
 
 We will create an `estimate_out` and an `materialize_out` direcotry in the home directory on HDFS to store intermediate data, so please make sure there are no conflicts before you run the project.
 
